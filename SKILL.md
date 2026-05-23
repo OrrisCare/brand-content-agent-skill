@@ -11,14 +11,15 @@ All external actions go through **Scalekit SDK** which manages OAuth tokens, API
 
 ## Setup (run once on first use)
 
-Before running any script, install dependencies and verify connections:
+Before running any script, run the setup wizard once:
 
 ```bash
 uv sync
+uv run scripts/setup.py
 uv run scripts/ensure_connections.py
 ```
 
-`ensure_connections.py` auto-provisions the Apify token from `.env` and prints OAuth links for any service not yet authorized. Copy `.env.example` to `.env` in the skill directory and fill in your credentials before running any script.
+`setup.py` interactively collects credentials and saves them to `~/.config/brand-content-agent/.env` — outside the skill directory so they survive reinstalls. `ensure_connections.py` auto-provisions the Apify token and prints OAuth links for Notion and Gmail.
 
 ## Available Scripts
 
@@ -27,6 +28,7 @@ Run them with `uv run scripts/<script>.py`.
 
 | Script | Purpose | Key Args |
 |--------|---------|----------|
+| `setup.py` | Interactive credential setup wizard — saves to `~/.config/brand-content-agent/.env` | (none) |
 | `ensure_connections.py` | Check/authorize all Scalekit connections | (none) |
 | `search_content.py` | Search Instagram/TikTok for trending content | `--query`, `--platform`, `--max-results` |
 | `scrape_reels.py` | Get full details of specific posts/profiles. Extracts email from bio. | `--urls` or `--profiles` |
@@ -273,7 +275,7 @@ Detect user intent from natural language and follow the appropriate workflow. If
 
 ## Error Handling
 
-- If a script returns a connection error → tell user to run `uv run scripts/ensure_connections.py`
+- If a script returns a connection error or missing credentials → tell user to run `uv run scripts/setup.py` then `uv run scripts/ensure_connections.py`
 - If Apify returns empty results → suggest different search terms or broader query
 - If Notion save fails → check if `NOTION_DB_*` env vars are set and database is shared with "Scalekit Test" integration (via Notion page → `...` → Connections)
 - If Gmail send fails → check authorization status via `uv run scripts/ensure_connections.py`

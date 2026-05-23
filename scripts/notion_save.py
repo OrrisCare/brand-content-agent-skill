@@ -17,7 +17,7 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from scalekit_client import actions, USER_IDENTIFIER, NOTION_CONNECTION_NAME
 
-# Database IDs — set these in .env after creating Notion databases
+# Database IDs — loaded after scalekit_client has populated env from ~/.config
 DATABASES = {
     "content-library": os.getenv("NOTION_DB_CONTENT_LIBRARY"),
     "scripts": os.getenv("NOTION_DB_SCRIPTS"),
@@ -31,7 +31,7 @@ def create_page(database_key: str, properties: dict) -> dict:
     db_id = DATABASES.get(database_key)
     if not db_id:
         print(f"Error: No database ID configured for '{database_key}'.", file=sys.stderr)
-        print(f"Set NOTION_DB_{database_key.upper().replace('-', '_')} in .env", file=sys.stderr)
+        print(f"Set NOTION_DB_{database_key.upper().replace('-', '_')} by re-running: uv run scripts/setup.py", file=sys.stderr)
         sys.exit(1)
 
     print(f"[Notion] Creating page in '{database_key}' database...", file=sys.stderr)

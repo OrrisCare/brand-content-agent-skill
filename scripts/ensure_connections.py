@@ -15,8 +15,12 @@ from scalekit_client import (
     actions, USER_IDENTIFIER,
     APIFY_CONNECTION_NAME, NOTION_CONNECTION_NAME, GMAIL_CONNECTION_NAME,
 )
+from pathlib import Path
 from dotenv import load_dotenv
-load_dotenv()
+
+_config_env = Path.home() / ".config" / "brand-content-agent" / ".env"
+if not load_dotenv(_config_env) and not load_dotenv():
+    pass
 
 # OAuth connectors — need user to click an auth link
 OAUTH_CONNECTIONS = {
@@ -42,7 +46,7 @@ def provision_apify_token():
     """Set Apify BEARER token from APIFY_TOKEN env var via Scalekit REST API."""
     apify_token = os.getenv("APIFY_TOKEN")
     if not apify_token:
-        print("  ✗ Apify — APIFY_TOKEN not set in .env", file=sys.stderr)
+        print("  ✗ Apify — APIFY_TOKEN not set. Run: uv run scripts/setup.py", file=sys.stderr)
         return False
 
     response = actions.get_or_create_connected_account(

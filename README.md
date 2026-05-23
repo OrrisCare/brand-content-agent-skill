@@ -20,27 +20,21 @@ npx skills add OrrisCare/brand-content-agent-skill --skill brand-content-agent -
 
 ## Setup
 
-1. Copy `.env.example` to `.env` in the skill directory and fill in your credentials:
-   ```
-   SCALEKIT_ENV_URL=https://your-env.scalekit.cloud
-   SCALEKIT_CLIENT_ID=skc_...
-   SCALEKIT_CLIENT_SECRET=sks_...
-   APIFY_TOKEN=apify_api_...
-   NOTION_CONNECTION_NAME=notion
-   GMAIL_CONNECTION_NAME=gmail
-   NOTION_DB_CONTENT_LIBRARY=<your-notion-db-id>
-   ```
-
-2. Install Python dependencies:
+1. Install Python dependencies:
    ```bash
    uv sync
    ```
 
-3. Authorize connections:
+2. Run the interactive setup wizard — saves credentials to `~/.config/brand-content-agent/.env` (outside the skill directory, survives reinstalls):
+   ```bash
+   uv run scripts/setup.py
+   ```
+
+3. Authorize Notion + Gmail connections:
    ```bash
    uv run scripts/ensure_connections.py
    ```
-   Apify is auto-provisioned from `APIFY_TOKEN`. Click the printed links for Notion and Gmail.
+   Apify is auto-provisioned from your token. Click the printed links for Notion and Gmail.
 
 ## Usage
 

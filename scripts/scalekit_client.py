@@ -8,7 +8,11 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
-load_dotenv(Path(__file__).resolve().parent.parent / ".env")
+# Credentials live in ~/.config/brand-content-agent/.env — outside the skill
+# directory so they survive reinstalls and `npx skills add` updates.
+_config_env = Path.home() / ".config" / "brand-content-agent" / ".env"
+if not load_dotenv(_config_env) and not load_dotenv():
+    pass  # no .env found — os.getenv calls below will return None and fail clearly
 
 scalekit_client = scalekit.client.ScalekitClient(
     client_id=os.getenv("SCALEKIT_CLIENT_ID"),
