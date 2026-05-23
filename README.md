@@ -13,14 +13,16 @@ A Claude Code skill for content intelligence, creator outreach, and script writi
 ## Install
 
 ```bash
-npx skills add OrrisCare/brand-content-agent-skill -g
+npx skills add OrrisCare/brand-content-agent-skill --skill brand-content-agent -g
 ```
+
+[![skills.sh](https://skills.sh/b/OrrisCare/brand-content-agent-skill)](https://skills.sh/OrrisCare/brand-content-agent-skill)
 
 ## Setup
 
-1. Copy `.env.example` to `.env` and fill in your credentials:
+1. Copy `.env.example` to `.env` in the skill directory and fill in your credentials:
    ```
-   SCALEKIT_ENV_URL=https://your-env.scalekit.dev
+   SCALEKIT_ENV_URL=https://your-env.scalekit.cloud
    SCALEKIT_CLIENT_ID=skc_...
    SCALEKIT_CLIENT_SECRET=sks_...
    APIFY_TOKEN=apify_api_...
@@ -36,7 +38,7 @@ npx skills add OrrisCare/brand-content-agent-skill -g
 
 3. Authorize connections:
    ```bash
-   uv run ensure_connections.py
+   uv run scripts/ensure_connections.py
    ```
    Apify is auto-provisioned from `APIFY_TOKEN`. Click the printed links for Notion and Gmail.
 
