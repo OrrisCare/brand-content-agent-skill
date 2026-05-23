@@ -13,7 +13,7 @@ A Claude Code skill for content intelligence, creator outreach, and script writi
 ## Install
 
 ```bash
-npx skills add divyam/brand-content-agent-skill -g
+npx skills add OrrisCare/brand-content-agent-skill -g
 ```
 
 ## Setup
